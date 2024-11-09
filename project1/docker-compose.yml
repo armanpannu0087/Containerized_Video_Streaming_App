@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  auth-service:
+    build:
+      context: ./auth-service
+    ports:
+      - "5000:5000"
+
+  upload-service:
+    build:
+      context: ./upload-service
+    ports:
+      - "5001:5000"
+    volumes:
+      - ./uploads:/uploads
+
+  streaming-service:
+    build:
+      context: ./streaming-service
+    ports:
+      - "5002:5000"
+
+  file-system-service:
+    build:
+      context: ./file-system-service
+    ports:
+      - "5003:5000"
+
+  mysql-db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: Passw0rd
+      MYSQL_DATABASE: video_db
+    ports:
+      - "3307:3306"
